@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Profile</title>
+{% endblock %}
+
+{% block body %}
+    <!doctype html>
+    <html>
+      <head>
+        <title></title>
+      </head>
+      <body>
+        
+            <form>
+              <button name="profile" type="submit" value="My Events" formaction="/my_events">My Events</button><br>
+              <button name="profile" type="submit" value="Plan a Play Date" formaction="/create_event">Plan a Play Date</button><br>
+              <button name="profile" type="submit" value="Search for Play Dates" formaction="/events">Search for Play Dates</button><br>
+            </form>
+      
+        
+      </body>
+    </html> 
+
+{% endblock %}

@@ -32,11 +32,33 @@ def index():
 def create_event():
     """User can create an event"""
 
+
+
     return render_template("create_event.html")
+
+@app.route('/create_event', methods=['POST'])
+def create_event_process():
+
+# new route here for submitted create_event/ needs to add to events table
+
+    event_name = request.form["Name of Event"]
+    date_time = request.form["Date and Time"]
+    location = request.form["Location"]
+
+    event = Event(event_name=event_name, date_time=date_time, location=location)
+
+    db.session.add(new_event)
+    db.session.commit()
+
+    flash("Event %s added." % event_name)
+
+   return redirect("/my_events")
+
 
 @app.route("/my_events")
 def my_events():
     """Users can view events they've created or rsvp'ed to"""
+
 
     return render_template("my_events.html")
 
@@ -45,6 +67,9 @@ def my_events():
 def events():
     """Users can see all the events occurring in San Francisco"""
 
+
+    events = Event.query.order_by('date_time').all()
+
     return render_template("events.html")
 
 @app.route("/event_details")
@@ -52,11 +77,16 @@ def event_details():
     """When browsing events, users can see details that creator has provided"""
 
     return render_template("event_details.html")
+
+@app.route("/event_details", methods=['POST'])
+def rsvp_process():
+
+    return redirect("/my_events")
    
 
 if __name__ == "__main__":
 
-    app.debug = True
+    # app.debug = True
 
     connect_to_db(app)
 

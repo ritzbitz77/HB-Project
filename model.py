@@ -11,6 +11,11 @@ class User(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(65), nullable=False)
     zipcode = db.Column(db.String(15), nullable=False)
+    #my events
+
+    events =  db.relationship("Event", 
+                                secondary="participants",
+                                backref ="users")
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -32,6 +37,8 @@ class Event(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
+
+
         s = "<event_id=%s title=%s date_time=%s creator=%s>"
         return s % (self.event_id, self.title, self.date_time, self.creator)
 
@@ -48,10 +55,6 @@ class Participant(db.Model):
     event_id = db.Column(db.Integer, db.ForeignKey("events.event_id"), 
                         nullable=False)
     
-    #Define relationship to user
-    user = db.relationship("User", 
-                            backref=db.backref("events", 
-                                            order_by=event_id))
     
     def __repr__(self):
         """Provide helpful representation when printed."""

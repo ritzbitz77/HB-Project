@@ -8,11 +8,13 @@
    <!DOCTYPE html>
 <html>
   <head>
+        <form action="/my_events" method="POST" id="create_event">
         Name of Event: <input type="text" name="eventname"><br>
 
        
                 <div class="container">
                  Date and Time:
+                 <!-- Taken from bootstrap -->
                 <div class="row">
                     <div class='col-sm-6'>
                         <div class="form-group">
@@ -167,6 +169,11 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhz0XdjH6ugr_MAS09ZqyZZnL__zIuO1U&libraries=places&callback=initAutocomplete"
          async defer></script>
+         </form>
+
+         <button type="submit" form="create_event" value="Submit">Submit</button>
+    </head>
+
   </body>
 </html>
 

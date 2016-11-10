@@ -33,6 +33,7 @@ class Event(db.Model):
     title = db.Column(db.String, nullable=True)
     date_time = db.Column(db.DateTime, nullable=True)
     creator = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=True)
+    note = db.Column(db.UnicodeText, nullable=False)
 
     def __repr__(self):
         """Provide helpful representation when printed."""

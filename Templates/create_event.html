@@ -8,31 +8,34 @@
    <!DOCTYPE html>
 <html>
   <head>
-        <form action="/my_events" method="POST" id="create_event">
-        Name of Event: <input type="text" name="eventname"><br>
+        <form action="/create_event" method="POST" id="create_event">
+        Name of Event: <input type="text" name="event-name"><br>
 
        
-                <div class="container">
-                 Date and Time:
-                 <!-- Taken from bootstrap -->
-                <div class="row">
-                    <div class='col-sm-6'>
-                        <div class="form-group">
-                            <div class='input-group date' id='datetimepicker1'>
-                                <input type='text' class="form-control" />
-                                <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar"></span>
-                                </span>
-                            </div>
-                        </div>
+        <div class="container">
+<!--          Date::
+         <input type="date" name="date">
+         Time:
+         <input type="time" name="time"> -->
+         <!-- Taken from bootstrap -->
+        <div class="row">
+            <div class='col-sm-6'>
+                <div class="form-group">
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input type='text' class="form-control" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
                     </div>
-                    <script type="text/javascript">
-                        $(function () {
-                            $('#datetimepicker1').datetimepicker();
-                        });
-                    </script>
                 </div>
-            </div><br>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#datetimepicker1').datetimepicker();
+                });
+            </script>
+        </div>
+    </div><br>
 
     
         Location:   
@@ -94,7 +97,7 @@
     </style>
   </head>
   <body>
-    <input id="place-search" type="text" placeholder="Play Date Address">
+    <input id="place-search" type="text" placeholder="Play Date Address" name="location">
     <div id="placemap"></div>
     <script>
       // This example adds a search box to a map, using the Google Place Autocomplete
@@ -169,6 +172,12 @@
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhz0XdjH6ugr_MAS09ZqyZZnL__zIuO1U&libraries=places&callback=initAutocomplete"
          async defer></script>
+        <br>
+
+        Notes:<br>
+          <textarea rows="4" cols="50" name="notes">
+Include details of playdate, ages of children attending and any other special information.
+          </textarea>
          </form>
 
          <button type="submit" form="create_event" value="Submit">Submit</button>

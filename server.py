@@ -41,23 +41,26 @@ def create_event_process():
 
 # new route here for submitted create_event/ needs to add to events table
 
-    event_name = request.form["Name of Event"]
-    date_time = request.form["Date and Time"]
-    location = request.form["Location"]
+    event_name = request.form["event-name"]
+    date_time = request.form["date-time"]
+    location = request.form["location"]
+    notes = request.form["notes"] #need to create this in db
 
-    event = Event(event_name=event_name, date_time=date_time, location=location)
+    event = Event(event_name=event_name, date_time=date_time, location=location, notes=notes)
 
     db.session.add(new_event)
     db.session.commit()
 
     flash("Event %s added." % event_name)
 
-   return redirect("/my_events")
+    return redirect("/my_events")
 
 
 @app.route("/my_events")
 def my_events():
     """Users can view events they've created or rsvp'ed to"""
+
+#not sure how to gather this info
 
 
     return render_template("my_events.html")
@@ -76,10 +79,14 @@ def events():
 def event_details():
     """When browsing events, users can see details that creator has provided"""
 
+
+
     return render_template("event_details.html")
 
 @app.route("/event_details", methods=['POST'])
 def rsvp_process():
+
+
 
     return redirect("/my_events")
    

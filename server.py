@@ -8,6 +8,10 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 from model import (connect_to_db, db, User, Event, Participant)
 
+from datetime import datetime
+
+from random import randint
+
 
 app = Flask(__name__)
 
@@ -40,15 +44,17 @@ def create_event():
 def create_event_process():
 
 # new route here for submitted create_event/ needs to add to events table
+  
 
-    event_name = request.form["event-name"]
-    date_time = request.form["date-time"]
-    location = request.form["location"]
-    notes = request.form["notes"] #need to create this in db
+    event_name = request.form.get("event-name")
+    date_time = request.form.get("date-time")
+    location = request.form.get("location")
+    notes = request.form.get("notes") #need to create this in db
+    user_id = randint(1,7)
 
-    event = Event(event_name=event_name, date_time=date_time, location=location, notes=notes)
+    event = Event(title=event_name, date_time=date_time, location=location, note=notes, user_id=user_id)
 
-    db.session.add(new_event)
+    db.session.add(event)
     db.session.commit()
 
     flash("Event %s added." % event_name)
@@ -60,8 +66,7 @@ def create_event_process():
 def my_events():
     """Users can view events they've created or rsvp'ed to"""
 
-#not sure how to gather this info
-
+#not sure how to gather this info, left outer join 
 
     return render_template("my_events.html")
 

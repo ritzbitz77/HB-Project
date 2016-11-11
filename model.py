@@ -32,7 +32,8 @@ class Event(db.Model):
     event_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     title = db.Column(db.String, nullable=True)
     date_time = db.Column(db.DateTime, nullable=True)
-    creator = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=True)
+    location = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=True)
     note = db.Column(db.UnicodeText, nullable=False)
 
     def __repr__(self):
@@ -40,8 +41,8 @@ class Event(db.Model):
 
 
 
-        s = "<event_id=%s title=%s date_time=%s creator=%s>"
-        return s % (self.event_id, self.title, self.date_time, self.creator)
+        s = "<event_id=%s title=%s date_time=%s user_id=%s>"
+        return s % (self.event_id, self.title, self.date_time, self.user_id)
 
 
 

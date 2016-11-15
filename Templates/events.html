@@ -12,6 +12,16 @@
       </head>
       <body>
       <h2>All Playdates!</h2>
+    <ul>
+    {% for event in events %}
+      <li>Title: {{ event.title }}<br>
+      Host: {{ event.host.name }}<br>
+      Location: {{ event.location }}<br>
+      Notes: {{ event.note }}<br>
+    <a href="{{url_for('event_details', event_id = event.event_id)}}">RSVP Here</a></li>
+    {% endfor %}
+    <ul>
+
         
       </body>
     </html> 

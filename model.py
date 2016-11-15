@@ -11,11 +11,12 @@ class User(db.Model):
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     name = db.Column(db.String(65), nullable=False)
     zipcode = db.Column(db.String(15), nullable=False)
-    #my events
+   
 
     events =  db.relationship("Event", 
                                 secondary="participants",
                                 backref ="users")
+
 
     def __repr__(self):
         """Provide helpful representation when printed."""
@@ -36,13 +37,16 @@ class Event(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=True)
     note = db.Column(db.UnicodeText, nullable=False)
 
+    host = db.relationship("User",
+                            backref="host_events")
+
+
     def __repr__(self):
         """Provide helpful representation when printed."""
 
 
-
-        s = "<event_id=%s title=%s date_time=%s user_id=%s>"
-        return s % (self.event_id, self.title, self.date_time, self.user_id)
+        s = "<event_id=%s title=%s date_time=%s user_id=%s, note=%s>"
+        return s % (self.event_id, self.title, self.date_time, self.user_id, self.note)
 
 
 
@@ -75,16 +79,40 @@ def connect_to_db(app):
     db.app = app
     db.init_app(app)
 
-# def example_data():
-#     """Create example data for the test database."""
+def example_data():
+    """Create example data for the test database."""
     
-#     Participant.query.delete()
+    Event.query.delete()
     
-    # tr = Game(name = "Ticket to Ride", description = "a cross-country train adventures")
-    # pg = Game(name = "Power Grid", description = "supply the most cities with power" )
-    # al = Game(name="Amazing Labyrinth", description="move around the shifting paths of the labyrinth in a race to collect various treasures")
-    # pf = Game(name="Princes of Florence", description="attract artists and scholars trying to become the most prestigious family in Florence")
-    # ag = Game(name="Agricola", description="farmers sow, plow the fields, collect wood, and feed their families"
+    rp = Event(title="Playdate at Rossi Park", 
+               date_time='2016-11-18 14:00:00', 
+               location="Angelo J. Rossi Playground, Willard North, San Francisco, CA, United States ", 
+               user_id=1, 
+               note="Snacks!")
+    ggp = Event(title="Playdate at GGP", 
+                date_time='2016-11-28 16:00:00', 
+                location="Mother's Meadow Playground, Martin Luther King Junior Drive, San Francisco, CA, United States", 
+                user_id=2, 
+                note="Snacks!")
+    pp = Event(title="Playdate at the Panhandle Park", 
+               date_time='2016-12-08 10:00:00', 
+               location="The Panhandle, San Francisco, CA, United States", 
+               user_id=3, 
+               note="Snacks!")
+    al = Event(title="Playdate at Alamo Square", 
+               date_time='2016-12-05 10:00:00', 
+               location="Alamo Square, San Francisco, CA, United States",  
+               user_id=4, 
+               note="Snacks!")
+    kp = Event(title="Playdate at Koret Park", 
+               date_time='2016-12-02 09:00:00', 
+               location="Koret Park, San Francisco, CA, United States", 
+               user_id=5, 
+               note="Snacks!")
+
+    db.session.add_all([rp, ggp, pp, al, kp])
+
+    db.session.commit()
     
 
 

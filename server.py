@@ -78,10 +78,10 @@ def events():
 
     events = Event.query.order_by('date_time').all()
 
-    return render_template("events.html")
+    return render_template("events.html", events=events)
 
-@app.route("/event_details")
-def event_details():
+@app.route("/event_details/<string:event_id>")
+def event_details(event_id):
     """When browsing events, users can see details that creator has provided"""
 
 

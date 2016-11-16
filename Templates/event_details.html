@@ -7,17 +7,42 @@
 {% block body %}
     <!doctype html>
     <html>
+
       <head>
         <title>Event Details</title>
       </head>
-      Title:
-      Date:
-      Location:
-      Notes:
+    <body>
+            <div>
+            Title: {{ event.title }}<br>
+            Host: {{ event.host.name }}<br>
+            Location: {{ event.location }}<br>
+            Notes: {{ event.note }}<br>
+            </div>
+            <br>
+            <div>
+            RSVP Form:<br>
+                <form action="/rsvp" method="POST" id="rsvp_form">
+                Name: <input type="text" name="name" required><br>
+                Notes: <br> <textarea rows="4" cols="50" name="notes" placeholder="Include ages of kids attending and any other important information here."></textarea><br>
+
+                <button type="submit" form="my_events" value="Submit">Submit</button>
+                </form>
+            </div>
+            <br>
+            <div>
+            Attendees:<br>
+            {% for participant in event.participants %}
+                Name: {{ participant.user.name }}<br>
+                Note: {{ participant.note }}<br>
+                <br>
+            {% endfor %}          
 
 
+           
 
-      <body>
+
+            </div>
+
         
       </body>
     </html> 

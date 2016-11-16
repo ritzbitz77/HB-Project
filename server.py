@@ -49,7 +49,7 @@ def create_event_process():
     event_name = request.form.get("event-name")
     date_time = request.form.get("date-time")
     location = request.form.get("location")
-    notes = request.form.get("notes") #need to create this in db
+    notes = request.form.get("notes") 
     user_id = randint(1,7)
 
     event = Event(title=event_name, date_time=date_time, location=location, note=notes, user_id=user_id)
@@ -66,7 +66,7 @@ def create_event_process():
 def my_events():
     """Users can view events they've created or rsvp'ed to"""
 
-#not sure how to gather this info, left outer join 
+#not sure how to gather this info 
 
     return render_template("my_events.html")
 
@@ -78,22 +78,33 @@ def events():
 
     events = Event.query.order_by('date_time').all()
 
+
     return render_template("events.html", events=events)
 
-@app.route("/event_details/<string:event_id>")
+@app.route("/event_details/<event_id>")
 def event_details(event_id):
     """When browsing events, users can see details that creator has provided"""
 
+    event = Event.query.get(event_id)
+    
 
+    return render_template("event_details.html", event=event)
 
-    return render_template("event_details.html")
-
-@app.route("/event_details", methods=['POST'])
+@app.route("/rsvp", methods=['POST'])
 def rsvp_process():
 
+    name = request.form.get("name")
+    note = request.form.get("note")
 
+    participant = Participant(name=name, note=note) 
 
-    return redirect("/my_events")
+    users = User.query.get(user_id)
+    
+
+    #how do i get the user_id here when there is no login yet?
+  
+
+    return redirect("/my_events", users=users)
    
 
 if __name__ == "__main__":

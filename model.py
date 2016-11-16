@@ -15,7 +15,13 @@ class User(db.Model):
 
     events =  db.relationship("Event", 
                                 secondary="participants",
-                                backref ="users")
+                                backref ="attendees")
+    # Do I even need this?
+    
+
+    rsvp = db.relationship("Participant",
+                            backref = "user")
+    #relationship between the users and participants table
 
 
     def __repr__(self):
@@ -34,11 +40,17 @@ class Event(db.Model):
     title = db.Column(db.String, nullable=True)
     date_time = db.Column(db.DateTime, nullable=True)
     location = db.Column(db.String, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'), nullable=True) #this is where we are getting host from
     note = db.Column(db.UnicodeText, nullable=False)
 
     host = db.relationship("User",
                             backref="host_events")
+
+    participants = db.relationship("Participant", backref="event")
+
+    # attendees = db.relationship("User",
+    #                             secondary="particpants",
+    #                             backref="events")
 
 
     def __repr__(self):
@@ -60,6 +72,7 @@ class Participant(db.Model):
                         nullable=False)
     event_id = db.Column(db.Integer, db.ForeignKey("events.event_id"), 
                         nullable=False)
+    note = db.Column(db.UnicodeText, nullable=False)
     
     
     def __repr__(self):
@@ -109,8 +122,23 @@ def example_data():
                location="Koret Park, San Francisco, CA, United States", 
                user_id=5, 
                note="Snacks!")
+    aa = Participant(user_id=10,
+                     event_id=2,
+                     note="I'll also bring snacks!")
+    ab = Participant(user_id=11,
+                     event_id=2,
+                     note="I'll also bring snacks!")
+    ac = Participant(user_id=12,
+                     event_id=3,
+                     note="I'll also bring snacks!")
+    ad = Participant(user_id=13,
+                     event_id=3 ,
+                     note="I'll also bring snacks!")
+    ae = Participant(user_id=14,
+                     event_id=4,
+                     note= "I'll also bring snacks!")
 
-    db.session.add_all([rp, ggp, pp, al, kp])
+    db.session.add_all([rp, ggp, pp, al, kp, aa, ab, ac, ad, ae])
 
     db.session.commit()
     

@@ -9,6 +9,7 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    email = db.Column(db.String, nullable=False, unique=True)
     name = db.Column(db.String(65), nullable=False)
     zipcode = db.Column(db.String(15), nullable=False)
    
@@ -45,12 +46,11 @@ class Event(db.Model):
 
     host = db.relationship("User",
                             backref="host_events")
+    #relationship between host and event. User_id is coming from the Event table.
 
     participants = db.relationship("Participant", backref="event")
+    #relationship between participants and the event
 
-    # attendees = db.relationship("User",
-    #                             secondary="particpants",
-    #                             backref="events")
 
 
     def __repr__(self):
@@ -81,8 +81,6 @@ class Participant(db.Model):
         s = "<Event event_id=%s user_id=%s>"
         return s % (self.event_id, self.user_id)
 
-##############################################################################
-# Helper functions
 
 def connect_to_db(app):
     """Connect the database to our Flask app."""
@@ -147,8 +145,6 @@ def example_data():
 
 
 if __name__ == "__main__":
-    # As a convenience, if we run this module interactively, it will leave
-    # you in a state of being able to work with the database directly.
 
     from server import app
     connect_to_db(app)

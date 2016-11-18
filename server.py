@@ -15,21 +15,55 @@ from random import randint
 
 app = Flask(__name__)
 
-# Required to use Flask sessions and the debug toolbar
+
 app.secret_key = "ABC"
 
-# Normally, if you use an undefined variable in Jinja2, it fails
-# silently. This is horrible. Fix this so that, instead, it raises an
-# error.
 app.jinja_env.undefined = StrictUndefined
 
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
+
+
+
+@app.route('/login')
+def login():
+
+    return render_template("login.html")
+
+@app.route('/handle-login', methods=['POST'])
+def handle_login():
+    '''Action for login form; log a user in.'''
+
+    email = request.form['email']
+    password = request.form['password']
+    user = User.query.filter(User.email==email).first()
+    
+
+    if user:
+        user_id = user.user_id
+        if password == 'blah':
+            session[ 'current_user' ] = user_id
+            flash ('Logged in as %s' % user.email)
+            return redirect ('/')
+
+        else:
+            flash ("Wrong password!")
+            return redirect ('/login')
+
+    else:
+        flash ("Username not found!")
+        return redirect ('/login')
+
+ 
 
 @app.route('/')
 def index():
     """User profile page"""
 
-    return render_template("profile.html")
+
+    user_id = session.get('current_user')
+    #user_id = session[ 'current_user' ] 
+
+    return render_template("profile.html", user_id=user_id)
   
 
 @app.route("/create_event")
@@ -45,6 +79,15 @@ def create_event_process():
 
 # new route here for submitted create_event/ needs to add to events table
   
+    # user_id = session.get('current_user')
+    # get user id out of session
+    # make sure not None
+    # if ok, 1) keep going 2) request User from database and then keep going
+    # user = User.query.filter(User.user_id==user_id).first()
+    
+
+
+
 
     event_name = request.form.get("event-name")
     date_time = request.form.get("date-time")
@@ -67,6 +110,7 @@ def my_events():
     """Users can view events they've created or rsvp'ed to"""
 
 #not sure how to gather this info 
+#session user info here
 
     return render_template("my_events.html")
 

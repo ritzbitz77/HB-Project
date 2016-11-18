@@ -13,10 +13,10 @@ def load_users():
     print "User"
 
     for row in list(open("Users.csv"))[1:]:
-        name, zipcode = row.strip().split(",")
+        name, zipcode, email = row.strip().split(",")
 
         user = User(name=name, 
-                        zipcode=zipcode)
+                        zipcode=zipcode, email=email)
 
         # We need to add to the session or it won't ever be stored
         db.session.add(user)

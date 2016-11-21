@@ -18,7 +18,6 @@ def load_users():
         user = User(name=name, 
                         zipcode=zipcode, email=email)
 
-        # We need to add to the session or it won't ever be stored
         db.session.add(user)
 
     db.session.commit()

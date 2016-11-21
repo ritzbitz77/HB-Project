@@ -61,9 +61,12 @@ def index():
 
 
     user_id = session.get('current_user')
-    #user_id = session[ 'current_user' ] 
 
-    return render_template("profile.html", user_id=user_id)
+    if user_id:
+        return render_template("profile.html", user_id=user_id)
+    else:
+        flash ("Please login to access this page!")
+        return redirect ('/login')
   
 
 @app.route("/create_event")
@@ -77,16 +80,21 @@ def create_event():
 @app.route('/create_event', methods=['POST'])
 def create_event_process():
 
-# new route here for submitted create_event/ needs to add to events table
-  
-    # user_id = session.get('current_user')
+    user_id = session.get('current_user')
+    user = User.query.filter(User.user_id==user_id).first()
+
+    if user:
+        user_id = user.user_id
+        flash ('Your event has been added!')
+    
+    else:
+        user_id == None
+        return redirect ('/')
+        flash ('Please login to complete this action!')
+ 
     # get user id out of session
     # make sure not None
     # if ok, 1) keep going 2) request User from database and then keep going
-    # user = User.query.filter(User.user_id==user_id).first()
-    
-
-
 
 
     event_name = request.form.get("event-name")

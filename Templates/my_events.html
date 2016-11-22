@@ -9,12 +9,17 @@
   
       <h2>Events I'm Hosting</h2>
 
-      <!-- events where session is same as session user id -->
+      {% for event in events %}
+      Title: {{ event.title }}<br>
+      Host: {{ event.host.name }}<br>
+      Location: {{ event.location }}<br>
+      Notes: {{ event.note }}<br>
+      <a href="{{url_for('event_details', event_id = event.event_id)}}">Event Details</a>
+      {% endfor %}
 
 
       <h2>Events I'm Attending</h2>
 
-      <!-- %for event in user.participants -->
 
 {% endblock %}
 

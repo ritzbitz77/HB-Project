@@ -81,20 +81,16 @@ def create_event():
 def create_event_process():
 
     user_id = session.get('current_user')
-    user = User.query.filter(User.user_id==user_id).first()
+    user = User.query.filter(User.user_id == user_id).first()
 
     if user:
-        user_id = user.user_id
+        # user_id = user.user_id
         flash ('Your event has been added!')
     
     else:
-        user_id == None
-        return redirect ('/')
+        # user_id == None
         flash ('Please login to complete this action!')
- 
-    # get user id out of session
-    # make sure not None
-    # if ok, 1) keep going 2) request User from database and then keep going
+        return redirect ('/')
 
 
     event_name = request.form.get("event-name")
@@ -108,7 +104,7 @@ def create_event_process():
     db.session.add(event)
     db.session.commit()
 
-    flash("Event %s added." % event_name)
+    flash ("%s is going to be awesome!" % event_name)
 
     return redirect("/my_events")
 
@@ -117,10 +113,20 @@ def create_event_process():
 def my_events():
     """Users can view events they've created or rsvp'ed to"""
 
-#not sure how to gather this info 
-#session user info here
+    #events that user is hosting
+    current_user = session.get('current_user')
+    events = Event.query.filter_by(user_id=current_user).all()
+    
+    #events that user is attending
+    # participant_in_event = Participant.query.filter_by(user_id=current_user).all()
+    # events = Event.query.filter_by(user_id=current_user).all()
+    # event_info = Participant.query.get()
+    # print participant_in_event
 
-    return render_template("my_events.html")
+
+
+
+    return render_template("my_events.html", events=events, participant_in_event=participant_in_event)
 
 
 @app.route("/events")
@@ -138,25 +144,24 @@ def event_details(event_id):
     """When browsing events, users can see details that creator has provided"""
 
     event = Event.query.get(event_id)
-    
 
     return render_template("event_details.html", event=event)
 
-@app.route("/rsvp", methods=['POST'])
-def rsvp_process():
+@app.route("/rsvp/<event_id>", methods=['POST'])
+def rsvp_process(event_id):
 
-    name = request.form.get("name")
+    
+    user_id = session.get('current_user')
     note = request.form.get("note")
 
-    participant = Participant(name=name, note=note) 
+    participant = Participant(event_id=event_id, user_id=user_id, note=note) 
 
     users = User.query.get(user_id)
+
+    db.session.add(participant)
+    db.session.commit()
     
-
-    #how do i get the user_id here when there is no login yet?
-  
-
-    return redirect("/my_events", users=users)
+    return redirect("/my_events")
    
 
 if __name__ == "__main__":

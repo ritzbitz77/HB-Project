@@ -5,8 +5,7 @@
 {% endblock %}
 
 {% block body %}
->
- >
+
             <div>
             <b>{{ event.title }}</b><br>
             Host: {{ event.host.name }}<br>
@@ -16,11 +15,10 @@
             <br>
             <div>
             <b>RSVP Form:</b><br>
-                <form action="/rsvp" method="POST" id="rsvp_form">
-                Name: <input type="text" name="name" required><br>
-                Notes: <br> <textarea rows="4" cols="50" name="notes" placeholder="Include ages of kids attending and any other important information here."></textarea><br>
+                <form action="/rsvp/{{event.event_id}}" method="POST" id="rsvp_form">
+                Notes: <br> <textarea rows="4" cols="50" name="note" placeholder="Include ages of kids attending and any other important information here."></textarea><br>
 
-                <button type="submit" form="my_events" value="Submit">Submit</button>
+                <button type="submit" value="Submit">Submit</button>
                 </form>
             </div>
             <br>
@@ -31,6 +29,9 @@
                 Note: {{ participant.note }}<br>
                 <br>
             {% endfor %}       
+
+
+
 
 
             </div>

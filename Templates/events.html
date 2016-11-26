@@ -13,7 +13,7 @@
       Host: {{ event.host.name }}<br>
       Location: {{ event.location }}<br>
       Notes: {{ event.note }}<br>
-    <a href="{{url_for('event_details', event_id = event.event_id)}}">Event Details and RSVP</a></li>
+    <a href="{{url_for('event_details', event_id = event.event_id)}}">RSVP for this Event</a></li>
     {% endfor %}
     <ul>
 

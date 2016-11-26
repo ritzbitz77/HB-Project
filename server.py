@@ -53,7 +53,13 @@ def handle_login():
         flash ("Username not found!")
         return redirect ('/login')
 
- 
+@app.route('/logout')
+def logout():
+    """Log out."""
+
+    del session["email"]
+    flash("Logged Out.")
+    return redirect("/")
 
 @app.route('/')
 def index():
@@ -113,20 +119,19 @@ def create_event_process():
 def my_events():
     """Users can view events they've created or rsvp'ed to"""
 
+    
+
     #events that user is hosting
     current_user = session.get('current_user')
+ 
     events = Event.query.filter_by(user_id=current_user).all()
     
-    #events that user is attending
-    # participant_in_event = Participant.query.filter_by(user_id=current_user).all()
-    # events = Event.query.filter_by(user_id=current_user).all()
-    # event_info = Participant.query.get()
-    # print participant_in_event
+    p = db.session.query(Event).join(Participant)
+    rsvp_event = p.filter(Participant.user_id == current_user).all()
+    print rsvp_event
+    
 
-
-
-
-    return render_template("my_events.html", events=events, participant_in_event=participant_in_event)
+    return render_template("my_events.html", rsvp_event=rsvp_event, events=events)
 
 
 @app.route("/events")

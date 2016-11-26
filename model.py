@@ -17,7 +17,7 @@ class User(db.Model):
     events =  db.relationship("Event", 
                                 secondary="participants",
                                 backref ="attendees")
-    # Do I even need this?
+    
     
 
     rsvp = db.relationship("Participant",
@@ -26,7 +26,6 @@ class User(db.Model):
 
 
     def __repr__(self):
-        """Provide helpful representation when printed."""
 
         return "<User user_id=%s name=%s>" % (self.user_id, self.name)
 
@@ -54,7 +53,6 @@ class Event(db.Model):
 
 
     def __repr__(self):
-        """Provide helpful representation when printed."""
 
 
         s = "<event_id=%s title=%s date_time=%s user_id=%s, note=%s>"
@@ -76,7 +74,6 @@ class Participant(db.Model):
     
     
     def __repr__(self):
-        """Provide helpful representation when printed."""
 
         s = "<Event event_id=%s user_id=%s>"
         return s % (self.event_id, self.user_id)
@@ -85,7 +82,6 @@ class Participant(db.Model):
 def connect_to_db(app):
     """Connect the database to our Flask app."""
 
-    # Configure to use our PstgreSQL database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///sfplaydates'
     db.app = app
     db.init_app(app)

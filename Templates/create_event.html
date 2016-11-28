@@ -4,43 +4,8 @@
     <title>Create Event</title>
 {% endblock %}
 
-{% block body %}
-   <!DOCTYPE html>
-<html>
-  <head>
-        <form action="/create_event" method="POST" id="create_event">
-        Name of Event: <input type="text" name="event-name" required><br>
-
-       
-        <div class="container">
-
-        Date and Time:
-        <div class="row"> 
-            <div class='col-sm-6'>
-                <div class="form-group">
-                    <div class='input-group date' id='datetimepicker1'>
-                        <input type='text' class="form-control" name="date-time" id="date-time" required/>
-                        <span class="input-group-addon">
-                            <span class="glyphicon glyphicon-calendar"></span>
-                        </span>
-                    </div>
-                </div>
-            </div>
-
-            <script type="text/javascript">
-                $(function () {
-                    $('#datetimepicker1').datetimepicker();
-                });
-            </script>
-        </div>
-    </div><br>
-
-    
-        Location:   
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Places Searchbox</title>
-    <style>
+{% block head %}
+<style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #placemap {
@@ -93,95 +58,145 @@
         width: 345px;
       }
     </style>
-  </head>
-  <body>
-    <input id="place-search" type="text" placeholder="Play Date Address" name="location" required>
-    <div id="placemap"></div>
-    <script>
-      // This example adds a search box to a map, using the Google Place Autocomplete
-      // feature. People can enter geographical searches. The search box will return a
-      // pick list containing a mix of places and predicted search terms.
+{% endblock %}
 
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
+{% block body %}
+ 
+<section id="portfolio">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>Create a Playdate!</h2>
+                <hr class="star-primary">
+            </div>
 
-      function initAutocomplete() {
-        var map = new google.maps.Map(document.getElementById('placemap'), {
-          center: {lat: -0.0022, lng: -78.4558},
-          zoom: 1,
-          mapTypeControl: false,
-          
-          streetViewControl: false
-        });
 
-        // Create the search box and link it to the UI element.
-        var input = document.getElementById('place-search');
-        var searchBox = new google.maps.places.SearchBox(input);
+            <form action="/create_event" method="POST" id="create_event">
 
-        // Bias the SearchBox results towards current map's viewport.
-        map.addListener('bounds_changed', function() {
-          searchBox.setBounds(map.getBounds());
-        });
+                Name of Event:
+                <input type="text" name="event-name" required>
+                <br>
 
-        var markers = [];
 
-        // Listen for the event fired when the user selects a prediction and retrieve
-        // more details for that place.
-        searchBox.addListener('places_changed', function() {
-          var place = searchBox.getPlaces()[0];
-          console.log(place);
-          if (place.length == 0) {
-            return;
-          }
+                <div class="container">
 
-          // Clear out the old markers.
-          markers.forEach(function(marker) {
-            marker.setMap(null);
-          });
+                    Date and Time:
+                    <div class="row">
+                        <div class='col-sm-6'>
+                            <div class="form-group">
+                                <div class='input-group date' id='datetimepicker1'>
+                                    <input type='text' class="form-control" name="date-time" id="date-time" required/>
+                                    <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
 
-          var bounds = new google.maps.LatLngBounds();
-          var icon = {
-            url: 'http://maps.google.com/mapfiles/ms/icons/red.png',
-            size: new google.maps.Size(71, 71),
-            origin: new google.maps.Point(0, 0),
-            anchor: new google.maps.Point(17, 34),
-            scaledSize: new google.maps.Size(25, 25)
-          };
+                        <script type="text/javascript">
+                            $(function() {
+                                $('#datetimepicker1').datetimepicker();
+                            });
+                        </script>
+                    </div>
+                </div>
+                <br> Location:
+                <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+                <meta charset="utf-8">
+                <title>Places Searchbox</title>
 
-          new google.maps.Marker({
-            map: map,
-            icon: icon,
-            title: place.name,
-            position: place.geometry.location
-          });
 
-          if (place.geometry.viewport) {
-              // Only geocodes have viewport.
-              bounds.union(place.geometry.viewport);
-          } else {
-              bounds.extend(place.geometry.location);
-          }
-          map.fitBounds(bounds);
+                <input id="place-search" type="text" placeholder="Play Date Address" name="location" required>
+                <div id="placemap"></div>
+                <script>
+                    // This example adds a search box to a map, using the Google Place Autocomplete
+                    // feature. People can enter geographical searches. The search box will return a
+                    // pick list containing a mix of places and predicted search terms.
 
-        });
-      }
+                    // This example requires the Places library. Include the libraries=places
+                    // parameter when you first load the API. For example:
+                    // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 
-    </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhz0XdjH6ugr_MAS09ZqyZZnL__zIuO1U&libraries=places&callback=initAutocomplete"
-         async defer></script>
-        <br>
+                    function initAutocomplete() {
+                        var map = new google.maps.Map(document.getElementById('placemap'), {
+                            center: {
+                                lat: -0.0022,
+                                lng: -78.4558
+                            },
+                            zoom: 1,
+                            mapTypeControl: false,
 
-        Notes:<br>
-          <textarea rows="4" cols="50" name="notes" placeholder="Include details of playdate, ages of children attending and any other special information."></textarea>
-         </form>
+                            streetViewControl: false
+                        });
 
-         <button type="submit" form="create_event" value="Submit">Create your Event</button>
-    </head>
+                        // Create the search box and link it to the UI element.
+                        var input = document.getElementById('place-search');
+                        var searchBox = new google.maps.places.SearchBox(input);
 
-  </body>
-</html>
+                        // Bias the SearchBox results towards current map's viewport.
+                        map.addListener('bounds_changed', function() {
+                            searchBox.setBounds(map.getBounds());
+                        });
 
+                        var markers = [];
+
+                        // Listen for the event fired when the user selects a prediction and retrieve
+                        // more details for that place.
+                        searchBox.addListener('places_changed', function() {
+                            var place = searchBox.getPlaces()[0];
+                            console.log(place);
+                            if (place.length == 0) {
+                                return;
+                            }
+
+                            // Clear out the old markers.
+                            markers.forEach(function(marker) {
+                                marker.setMap(null);
+                            });
+
+                            var bounds = new google.maps.LatLngBounds();
+                            var icon = {
+                                url: 'http://maps.google.com/mapfiles/ms/icons/red.png',
+                                size: new google.maps.Size(71, 71),
+                                origin: new google.maps.Point(0, 0),
+                                anchor: new google.maps.Point(17, 34),
+                                scaledSize: new google.maps.Size(25, 25)
+                            };
+
+                            new google.maps.Marker({
+                                map: map,
+                                icon: icon,
+                                title: place.name,
+                                position: place.geometry.location
+                            });
+
+                            if (place.geometry.viewport) {
+                                // Only geocodes have viewport.
+                                bounds.union(place.geometry.viewport);
+                            } else {
+                                bounds.extend(place.geometry.location);
+                            }
+                            map.fitBounds(bounds);
+
+                        });
+                    }
+                </script>
+                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBhz0XdjH6ugr_MAS09ZqyZZnL__zIuO1U&libraries=places&callback=initAutocomplete" async defer></script>
+                <br> Notes:
+
+                <br>
+                <textarea rows="4" cols="50" name="notes" placeholder="Include details of playdate, ages of children attending and any other special information."></textarea>
+                <br>
+
+                <br>
+
+                <button type="submit" form="create_event" value="Submit">Create your Event</button>
+
+            </form>
+
+        </div>
+    </div>
+</section>
 
 {% endblock %}
 

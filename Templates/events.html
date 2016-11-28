@@ -5,17 +5,59 @@
 {% endblock %}
 
 {% block body %}
+ <!-- Portfolio Grid Section -->
+    <section id="portfolio">
+       
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2>All Playdates!</h2>
+                    <hr class="star-primary">
+                </div>
+            </div>
+            {% for event in events %} 
+            <div class="row">
+                <div class="col-sm-3 portfolio-item"> </div>
+                <div class="col-sm-2 portfolio-item">
+                  
+                  <a href="{{url_for('event_details', event_id = event.event_id)}}">
+                  <img src="/static/img/myevents/cube.png" class="img-responsive" alt="Paydate Image"></a>
+            
+                </div>
+                <div class="col-sm-4 portfolio-item">
+                  <table class="table">
+                    <tr>
+                      <td class="text-right"><strong>Title</strong></td>
+                      <td><a href="{{url_for('event_details', event_id = event.event_id)}}">{{ event.title }}</a></td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><strong>Host</strong></td>
+                      <td>{{ event.host.name }}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><strong>Location</strong></td>
+                      <td><a href="http://maps.google.com/?q='{{ event.location }}'">{{ event.location }}</a></td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><strong>Notes</strong></td>
+                      <td>{{ event.note }}</td>
+                    </tr>
+                    <tr>
+                        <td class="text-right"><strong>RSVP</strong></td>
+                        <td><a href="{{url_for('event_details', event_id = event.event_id)}}">Click here to go!</a></td>
+                    </tr>
+                  </table>
+                  <p>
+                  
+                  </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 
-      <h2>All Playdates!</h2>
-    <ul>
-    {% for event in events %}
-      <li>Title: {{ event.title }}<br>
-      Host: {{ event.host.name }}<br>
-      Location: {{ event.location }}<br>
-      Notes: {{ event.note }}<br>
-    <a href="{{url_for('event_details', event_id = event.event_id)}}">RSVP for this Event</a></li>
-    {% endfor %}
-    <ul>
+
+
 
 
 {% endblock %}

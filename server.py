@@ -15,18 +15,14 @@ from random import randint
 
 app = Flask(__name__)
 
-
 app.secret_key = "ABC"
-
 app.jinja_env.undefined = StrictUndefined
-
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
-
 
 
 @app.route('/login')
 def login():
-
+    session.current_user = None
     return render_template("login.html")
 
 @app.route('/handle-login', methods=['POST'])
@@ -36,14 +32,13 @@ def handle_login():
     email = request.form['email']
     password = request.form['password']
     user = User.query.filter(User.email==email).first()
-    
 
     if user:
         user_id = user.user_id
         if password == 'blah':
             session[ 'current_user' ] = user_id
             flash ('Logged in as %s' % user.email)
-            return redirect ('/')
+            return redirect ('/my_events')
 
         else:
             flash ("Wrong password!")
@@ -57,7 +52,7 @@ def handle_login():
 def logout():
     """Log out."""
 
-    del session["email"]
+    del session["current_user"]
     flash("Logged Out.")
     return redirect("/")
 
@@ -69,7 +64,7 @@ def index():
     user_id = session.get('current_user')
 
     if user_id:
-        return render_template("profile.html", user_id=user_id)
+        return redirect ('/my_events')
     else:
         flash ("Please login to access this page!")
         return redirect ('/login')
@@ -78,9 +73,6 @@ def index():
 @app.route("/create_event")
 def create_event():
     """User can create an event"""
-
-
-
     return render_template("create_event.html")
 
 @app.route('/create_event', methods=['POST'])
@@ -143,6 +135,7 @@ def events():
 
 
     return render_template("events.html", events=events)
+
 
 @app.route("/event_details/<event_id>")
 def event_details(event_id):

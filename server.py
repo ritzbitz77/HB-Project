@@ -77,16 +77,14 @@ def create_event():
 
 @app.route('/create_event', methods=['POST'])
 def create_event_process():
-
     user_id = session.get('current_user')
     user = User.query.filter(User.user_id == user_id).first()
+    print user_id, user
 
     if user:
-        # user_id = user.user_id
         flash ('Your event has been added!')
     
     else:
-        # user_id == None
         flash ('Please login to complete this action!')
         return redirect ('/')
 
@@ -95,7 +93,6 @@ def create_event_process():
     date_time = request.form.get("date-time")
     location = request.form.get("location")
     notes = request.form.get("notes") 
-    user_id = randint(1,7)
 
     event = Event(title=event_name, date_time=date_time, location=location, note=notes, user_id=user_id)
 
@@ -120,7 +117,8 @@ def my_events():
     
     p = db.session.query(Event).join(Participant)
     rsvp_event = p.filter(Participant.user_id == current_user).all()
-    print rsvp_event
+    print "rsvp_event", rsvp_event 
+    print "events", events
     
 
     return render_template("my_events.html", rsvp_event=rsvp_event, events=events)

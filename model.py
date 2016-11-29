@@ -95,42 +95,42 @@ def example_data():
                date_time='2016-11-18 14:00:00', 
                location="Angelo J. Rossi Playground, Willard North, San Francisco, CA, United States ", 
                user_id=1, 
-               note="Snacks!")
+               note="Tim is 2 and Sally is 4. We will bring some toys to play in the sand. I'll have some wine for the adults!")
     ggp = Event(title="Playdate at GGP", 
                 date_time='2016-11-28 16:00:00', 
                 location="Mother's Meadow Playground, Martin Luther King Junior Drive, San Francisco, CA, United States", 
                 user_id=2, 
-                note="Snacks!")
+                note="Mumta and Uma are twins who are 4 years old. We will have their scooters and will be hanging out under the big tree.")
     pp = Event(title="Playdate at the Panhandle Park", 
                date_time='2016-12-08 10:00:00', 
                location="The Panhandle, San Francisco, CA, United States", 
                user_id=3, 
-               note="Snacks!")
+               note="Josie just learned how to ride her bike! She will bring it to the park!")
     al = Event(title="Playdate at Alamo Square", 
                date_time='2016-12-05 10:00:00', 
                location="Alamo Square, San Francisco, CA, United States",  
                user_id=4, 
-               note="Snacks!")
+               note="Billy (age 6) broke his arm but can still go down the slide. Hopefully we will see you there.")
     kp = Event(title="Playdate at Koret Park", 
                date_time='2016-12-02 09:00:00', 
                location="Koret Park, San Francisco, CA, United States", 
                user_id=5, 
-               note="Snacks!")
+               note="My husband needs some guy friends to hang out with at the park. Come and give your wife a break. I'll pack some sandwiches.")
     aa = Participant(user_id=10,
                      event_id=2,
-                     note="I'll also bring snacks!")
+                     note="Looking forward to it! Jilly is 2!")
     ab = Participant(user_id=11,
                      event_id=2,
-                     note="I'll also bring snacks!")
+                     note="We will have a big box of goldfish to share. Alex just turned two and is finally learning to share.")
     ac = Participant(user_id=12,
                      event_id=3,
-                     note="I'll also bring snacks!")
+                     note="We will bring some almond butter sandwiches. No peanuts for my peanut!")
     ad = Participant(user_id=13,
                      event_id=3 ,
-                     note="I'll also bring snacks!")
+                     note="Can't wait to make some new friends!")
     ae = Participant(user_id=14,
                      event_id=4,
-                     note= "I'll also bring snacks!")
+                     note= "My husband and I will be there with our 4 kids. They are 6 weeks, 2, 4 and 6. Looking forward to meeting some new friends!")
 
     db.session.add_all([rp, ggp, pp, al, kp, aa, ab, ac, ad, ae])
 

@@ -6,35 +6,93 @@
 
 {% block body %}
 
+<br><br><br><br><br><br>
             <div>
-            <b>{{ event.title }}</b><br>
-            Host: {{ event.host.name }}<br>
-            Location: {{ event.location }}<br>
-            Notes: {{ event.note }}<br>
-            </div>
-            <br>
-            <div>
-            <b>RSVP Form:</b><br>
+<div class="container">
+        <div class="row">
+        <div class="text-center">
+        <img src="/static/img/allphotos/car.png" alt="Paydate Image" style="width: 15%; height: 15%">
+        </div>
+        <div class="col-lg-12 text-center">
+        <h2>{{ event.title }}</h2>
+        <hr class="star-primary">
+        </div>
+        </div>
+</div>
+
+                <div class="col-sm-4"> </div>
+                <div class="col-sm-4 portfolio-item">
+                  <table class="table">
+
+                    <tr>
+                      <td class="text-right"><strong>Host</strong></td>
+                      <td>{{ event.host.name }}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><strong>Location</strong></td>
+                      <td>{{ event.location }}</td>
+                    </tr>
+                    <tr>
+                      <td class="text-right"><strong>Notes</strong></td>
+                      <td>{{ event.note }}</td>
+                    </tr>
+                    <tr>
+                <td class="text-right"><strong>RSVP</strong></td>
                 <form action="/rsvp/{{event.event_id}}" method="POST" id="rsvp_form">
-                Notes: <br> <textarea rows="4" cols="50" name="note" placeholder="Include ages of kids attending and any other important information here."></textarea><br>
-
-                <button type="submit" value="Submit">Submit</button>
+                    <td><form action="/rsvp/{{event.event_id}}" method="POST" id="rsvp_form">
+                    Notes: <br> <textarea rows="4" cols="50" name="note" placeholder="Include ages of kids attending and any other important information here.">We will be there with our 6 and 4 year olds.</textarea><br>
+                    <button type="submit" value="Submit">We'll be there!</button>
+                    </td>
                 </form>
+
+
+
+                    </tr>
+                  </table>
+                </div>
+            <br>
+
+
             </div>
             <br>
-            <div>
-            <b>Attendees:</b><br>
-            {% for participant in event.participants %}
-                Name: {{ participant.user.name }}<br>
-                Note: {{ participant.note }}<br>
-                <br>
-            {% endfor %}       
+
+            <br>
+            
+ <div class="container">
+    <div class="row">
+        <div class="col-lg-12 text-center">
+            <h2>Attendees</h2>
+            <hr class="star-primary">
 
 
+            <div class="col-sm-4"> </div>
+            <div class="col-sm-5 portfolio-item">
 
+                <table class="table">
+                <tr>
+                 <th>Name</th>
+                 <th>Note</th>
+                </tr>
+                    {% for participant in event.participants %}
 
+                    <tr>
+
+                        <td class="text-left">{{ participant.user.name }}</td>
+
+                        <td class="text-left">{{ participant.note }}</td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
 
             </div>
+            <br> 
+        </div>
+    </div>
+</div>
+<br><br><br><br><br><br><br><br><br><br>
+
+                
 
 
 {% endblock %}
